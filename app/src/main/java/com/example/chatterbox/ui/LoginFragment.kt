@@ -25,7 +25,6 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
     override fun onCreateView(
@@ -56,7 +55,6 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-
     //login using email password
     private fun loginUser() {
         showPB()
@@ -75,7 +73,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener {
                 hidePB()
                 if (it.isSuccessful) {
-                    launchChatActivity()
+                    launchHomeActivity()
                 } else {
                     Toast.makeText(requireContext(), "Wrong email or password", Toast.LENGTH_SHORT)
                         .show()
@@ -84,8 +82,8 @@ class LoginFragment : Fragment() {
             }
     }
 
-    //login using Google
 
+    //login using Google
     private fun loginUserWithGoogle() {
         showPB()
         val signinIntent = googleSignInClient.signInIntent
@@ -123,7 +121,7 @@ class LoginFragment : Fragment() {
             if (it.isSuccessful) {
                 Log.i("adi", "updateUI: ${account.email} ${account.displayName}")
 
-                launchChatActivity()
+                launchHomeActivity()
 //                Toast.makeText(requireContext(), it.result.toString(), Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), it.exception.toString(), Toast.LENGTH_SHORT).show()
@@ -133,8 +131,8 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun launchChatActivity() {
-        startActivity(Intent(requireContext(), ChatActivity::class.java))
+    private fun launchHomeActivity() {
+        startActivity(Intent(requireContext(), HomeActivity::class.java))
 
     }
 

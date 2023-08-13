@@ -1,8 +1,9 @@
 package com.example.chatterbox.models
 
-data class user(
+data class User(
+    var id:String,
     val name:String,
     val email:String,
     val password:String? = null,
 
-)
+    )
