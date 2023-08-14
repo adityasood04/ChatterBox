@@ -54,7 +54,6 @@ class SignUpFragment : Fragment() {
         }
         binding.btnSignUp.setOnClickListener {
             signupUser()
-
         }
 
         //navigation to login screen
