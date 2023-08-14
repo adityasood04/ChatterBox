@@ -16,5 +16,7 @@ class ChatActivity : AppCompatActivity() {
         val receiverID = intent.getStringExtra("RECEIVER_ID")!!
         Log.i("adi sender", SENDER_ID)
         FirebaseFirestore.getInstance().collection("Chats").document(receiverID)
+
+
     }
 }
