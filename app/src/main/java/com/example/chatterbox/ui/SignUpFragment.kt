@@ -27,8 +27,6 @@ class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
     val TAG = "adi"
-
-
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -37,6 +35,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         _binding = FragmentSignUpBinding.inflate(layoutInflater, container, false)
 
@@ -50,8 +49,6 @@ class SignUpFragment : Fragment() {
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-
-
         binding.ivGSignup.setOnClickListener {
             signupGoogle()
         }
@@ -59,7 +56,6 @@ class SignUpFragment : Fragment() {
             signupUser()
 
         }
-
 
         //navigation to login screen
         binding.tvBackToSignIn.setOnClickListener {
@@ -122,7 +118,7 @@ class SignUpFragment : Fragment() {
                 hidePB()
                 if (it.isSuccessful) {
 
-                    launchChatActivity()
+                    launchHomeActivity()
                 } else {
                     Log.i(TAG, "saveUserDetails: ${it.exception!!.message}")
                 }
@@ -137,8 +133,7 @@ class SignUpFragment : Fragment() {
         launcher.launch(signinIntent)
     }
 
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 handleResults(task)
@@ -179,8 +174,8 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun launchChatActivity() {
-        startActivity(Intent(requireContext(), ChatActivity::class.java))
+    private fun launchHomeActivity() {
+        startActivity(Intent(requireContext(), HomeActivity::class.java))
     }
 
     private fun showPB() {
