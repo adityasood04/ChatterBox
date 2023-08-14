@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chatterbox.databinding.ActivityMainBinding
 import com.example.chatterbox.ui.HomeActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -13,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startActivity(Intent(this,HomeActivity::class.java))
-
+        if(FirebaseAuth.getInstance().currentUser != null){
+            startActivity(Intent(this,HomeActivity::class.java))
+        }
 
     }
 }

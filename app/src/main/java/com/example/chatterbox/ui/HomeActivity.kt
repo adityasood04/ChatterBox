@@ -2,9 +2,6 @@ package com.example.chatterbox.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +18,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var auth:FirebaseAuth
     private lateinit var usersList:ArrayList<User>
-    private  lateinit var usersAdapter: UsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         usersList= ArrayList()
-        usersAdapter= UsersAdapter(this,usersList)
         showPB()
         FirebaseFirestore.getInstance().collection("User").get()
             .addOnSuccessListener {querySnapshot->
@@ -38,21 +33,24 @@ class HomeActivity : AppCompatActivity() {
                 //get all users from db
                 for (document in querySnapshot.documents) {
                     val user = document.toObject(User::class.java)
-                    if (user != null) {
+                    if (user != null && user.id != auth.currentUser!!.uid) {
                         usersList.add(user)
                     }
                 }
-                usersAdapter.notifyDataSetChanged()
+                //setting up recyclerview
+                binding.rcvChatUsers.layoutManager = LinearLayoutManager(this)
+                binding.rcvChatUsers.adapter = UsersAdapter(this,usersList, object :UsersAdapter.Listener{
+                    override fun onUserClicked(userID: String) {
+                        val i = Intent(this@HomeActivity,ChatActivity::class.java)
+                        i.putExtra("RECEIVER_ID",userID)
+                        startActivity(i)
+                    }
+                })
             }
             .addOnFailureListener {
                 hidePB()
                 Toast.makeText(this@HomeActivity, "Some error encountered!", Toast.LENGTH_SHORT).show()
             }
-
-        //setting up recyclerview
-        binding.rcvChatUsers.layoutManager = LinearLayoutManager(this)
-        binding.rcvChatUsers.adapter = usersAdapter
-
 
         binding.btnLogout.setOnClickListener {
             //logout user
