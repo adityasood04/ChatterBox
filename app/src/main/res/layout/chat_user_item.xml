@@ -7,12 +7,13 @@
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
     android:padding="5dp"
-    android:background="@drawable/light_blue_bg">
+    android:background="@drawable/chat_bg">
 
     <ImageView
         android:id="@+id/ivUserDP"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:fontFamily="@font/poppins"
         android:src="@drawable/google_logo"
         android:layout_margin="10dp"
 
@@ -31,8 +32,10 @@
             android:text="Aditya Sood"
             android:layout_marginHorizontal="10dp"
             android:textSize="18sp"
+        android:fontFamily="@font/poppins"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             android:layout_gravity="center"/>
 
     <TextView
@@ -42,9 +45,10 @@
             android:text="Here last sent or received message will be displayed"
             android:layout_marginHorizontal="10dp"
             android:textSize="14sp"
+        android:fontFamily="@font/poppins"
             android:maxLines="2"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="#E4E7EC"
             android:layout_gravity="center"/>
     </LinearLayout>
 

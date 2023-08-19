@@ -34,14 +34,14 @@ class UsersAdapter(
     }
 
     interface Listener{
-        fun onUserClicked(userID:String)
+        fun onUserClicked(userID:String,userName:String)
     }
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
 
         holder.tvUsername.text = usersList[position].name
         holder.tvLastMessage.text = usersList[position].lastMessage
         holder.llUserItem.setOnClickListener {
-            listener.onUserClicked(usersList[position].id)
+            listener.onUserClicked(usersList[position].id, usersList[position].name)
         }
 
         //TODO load user dp using Picasso
