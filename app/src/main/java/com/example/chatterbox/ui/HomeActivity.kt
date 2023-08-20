@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatterbox.MainActivity
 import com.example.chatterbox.R
@@ -29,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.blue_bg)
 
         setContentView(binding.root)
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         auth = FirebaseAuth.getInstance()
         usersList= ArrayList()
         showPB()
@@ -36,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
             .addOnSuccessListener {querySnapshot->
                 hidePB()
                 usersList.clear()
+
                 //get all users from db
                 for (document in querySnapshot.documents) {
                     val user = document.toObject(User::class.java)

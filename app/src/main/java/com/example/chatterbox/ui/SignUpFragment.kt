@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.chatterbox.MainActivity
 import com.example.chatterbox.R
 import com.example.chatterbox.databinding.FragmentSignUpBinding
 import com.example.chatterbox.models.User
@@ -175,6 +176,8 @@ class SignUpFragment : Fragment() {
 
     private fun launchHomeActivity() {
         startActivity(Intent(requireContext(), HomeActivity::class.java))
+        activity?.finish()
+
     }
 
     private fun showPB() {

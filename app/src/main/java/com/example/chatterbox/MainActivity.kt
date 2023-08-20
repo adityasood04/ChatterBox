@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         if(FirebaseAuth.getInstance().currentUser != null){
             startActivity(Intent(this,HomeActivity::class.java))
+            finish()
         }
 
     }
