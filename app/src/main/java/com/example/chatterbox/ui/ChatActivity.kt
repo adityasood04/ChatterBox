@@ -11,7 +11,7 @@ import com.example.chatterbox.databinding.ActivityChatBinding
 import com.example.chatterbox.models.Message
 import com.example.chatterbox.models.Messageslist
 import com.example.chatterbox.util.Constants
-import com.example.chatterbox.util.Constants.Companion.SENDER_ID
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -23,17 +23,22 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatsArrayList:ArrayList<Message>
     private lateinit var senderRoom:String
     private lateinit var receiverRoom:String
-    private var areChatsLoaded = false
+    private val TAG = "adi chat"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val receiverID = intent.getStringExtra("RECEIVER_ID")!!
+        val senderID = FirebaseAuth.getInstance().currentUser?.uid
+        val username = intent.getStringExtra("USERNAME")!!
+
+        //Receiver's name
+        binding.tvChatUsername.text = username
 
         //sender and receiver ids
-        senderRoom =  receiverID + SENDER_ID
-        receiverRoom = SENDER_ID + receiverID
+        senderRoom =  receiverID + senderID
+        receiverRoom = senderID + receiverID
 
         //current time
         val calendar = Calendar.getInstance()
@@ -43,11 +48,13 @@ class ChatActivity : AppCompatActivity() {
 
         chatsArrayList = ArrayList()
         chatList = Messageslist(chatsArrayList)
+
+        //fetch previous chats from db
         getPreviousChats()
 
         binding.ivSend.setOnClickListener {
             if(binding.etMessage.text.toString().isNotBlank()){
-                val message = Message(SENDER_ID,binding.etMessage.text.toString(),formattedTime)
+                val message = Message(senderID!!,binding.etMessage.text.toString(),formattedTime)
                 saveMessage(message)
             }
         }
@@ -56,7 +63,6 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun getPreviousChats() {
-
         FirebaseFirestore.getInstance().collection("Chats").document(senderRoom)
             .get()
             .addOnCompleteListener {
@@ -66,7 +72,6 @@ class ChatActivity : AppCompatActivity() {
                         chatList = messages
                         Log.i("adi msg", chatList.toString())
                     }
-                    areChatsLoaded = true
                     if(chatList.chats.isNotEmpty()){
                         setChatsInRCV(chatList)
 
@@ -82,8 +87,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setChatsInRCV(chatList: Messageslist) {
         binding.rcvChats.layoutManager = LinearLayoutManager(this)
-        binding.rcvChats.adapter = ChatAdapter(this,chatList.chats!!)
-        binding.etMessage.setText("")
+        binding.rcvChats.adapter = ChatAdapter(this,chatList.chats)
     }
 
     private fun saveMessage(message: Message) {
@@ -94,6 +98,8 @@ class ChatActivity : AppCompatActivity() {
                 FirebaseFirestore.getInstance().collection("Chats").document(receiverRoom)
                     .set(chatList)
                 binding.rcvChats.adapter?.notifyDataSetChanged()
+                binding.etMessage.setText("")
+
 
             }
             .addOnFailureListener {

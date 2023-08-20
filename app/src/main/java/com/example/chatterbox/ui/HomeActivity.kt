@@ -40,9 +40,10 @@ class HomeActivity : AppCompatActivity() {
                 //setting up recyclerview
                 binding.rcvChatUsers.layoutManager = LinearLayoutManager(this)
                 binding.rcvChatUsers.adapter = UsersAdapter(this,usersList, object :UsersAdapter.Listener{
-                    override fun onUserClicked(userID: String) {
+                    override fun onUserClicked(userID: String,userName:String) {
                         val i = Intent(this@HomeActivity,ChatActivity::class.java)
                         i.putExtra("RECEIVER_ID",userID)
+                        i.putExtra("USERNAME",userName)
                         startActivity(i)
                     }
                 })

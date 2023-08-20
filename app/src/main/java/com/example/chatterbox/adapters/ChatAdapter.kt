@@ -14,9 +14,11 @@ class ChatAdapter (private val context: Context,
                    private val chatList:ArrayList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class SenderChatViewHolder(view: View):RecyclerView.ViewHolder(view){
         val tvSentMessage = view.findViewById<TextView>(R.id.tvSentMessage)
+        val tvSentMessageTime = view.findViewById<TextView>(R.id.tvSentMessageTime)
     }
     class ReceivedChatViewHolder(view: View):RecyclerView.ViewHolder(view){
         val tvReceivedMessage = view.findViewById<TextView>(R.id.tvReceivedMessage)
+        val tvReceivedMessageTime= view.findViewById<TextView>(R.id.tvReceivedMessageTime)
 
     }
 
@@ -51,12 +53,16 @@ class ChatAdapter (private val context: Context,
         if(holder.javaClass  == SenderChatViewHolder::class.java){
             val viewHolder = holder as SenderChatViewHolder
             viewHolder.tvSentMessage.text = currMessage.text
+            viewHolder.tvSentMessageTime.text = currMessage.time
+
         }
 
         //received message
         else{
             val viewHolder = holder as ReceivedChatViewHolder
             viewHolder.tvReceivedMessage.text = currMessage.text
+            viewHolder.tvReceivedMessageTime.text = currMessage.time
+
         }
     }
 }
