@@ -19,7 +19,7 @@ class UsersAdapter(
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvUsername: TextView = view.findViewById(R.id.tvUsername)
         val ivUserDP: ImageView = view.findViewById(R.id.ivUserDP)
-        val tvLastMessage: TextView = view.findViewById(R.id.tvLastMessage)
+//        val tvLastMessage: TextView = view.findViewById(R.id.tvLastMessage)
         val llUserItem: LinearLayout = view.findViewById(R.id.llUserItem)
     }
 
@@ -39,7 +39,7 @@ class UsersAdapter(
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
 
         holder.tvUsername.text = usersList[position].name
-        holder.tvLastMessage.text = usersList[position].lastMessage
+//        holder.tvLastMessage.text = usersList[position].lastMessage
         holder.llUserItem.setOnClickListener {
             listener.onUserClicked(usersList[position].id, usersList[position].name)
         }

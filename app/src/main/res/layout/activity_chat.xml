@@ -33,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5">
             <ImageView
+                android:id="@+id/btnBackChat"
                 android:layout_gravity="center"
                 android:paddingVertical="5dp"
                 android:paddingStart="10dp"
@@ -91,6 +92,7 @@
             android:layout_weight="1"
             android:background="@drawable/light_blue_bg"
             android:hint="Message"
+            android:layout_marginStart="5dp"
             android:maxLines="5"
             android:paddingHorizontal="5dp"
             android:paddingVertical="10dp"

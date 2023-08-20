@@ -1,9 +1,11 @@
 package com.example.chatterbox.ui
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatterbox.R
 import com.example.chatterbox.adapters.ChatAdapter
@@ -27,6 +29,8 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+
         setContentView(binding.root)
 
         val receiverID = intent.getStringExtra("RECEIVER_ID")!!
@@ -59,6 +63,9 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnBackChat.setOnClickListener {
+            finish()
+        }
 
     }
 

@@ -1,10 +1,12 @@
 package com.example.chatterbox.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatterbox.MainActivity
 import com.example.chatterbox.R
@@ -22,6 +24,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+
+        //status bar color
+        window.statusBarColor = ContextCompat.getColor(this, R.color.blue_bg)
+
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         usersList= ArrayList()
